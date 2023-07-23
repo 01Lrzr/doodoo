@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>doodoo</title>
+</head>
+<body>
+<form id="form">
+  <input type="text" id="input"/>
+  <input type="submit" value="확인" id="addBtn">
+</form>
+<ul id="todos">
+</ul>
+<button id="saveBtn">저장</button>
+<button id="deleteAllBtn">모두 삭제</button>
+<script>
+  const $form = document.querySelector('#form');
+  const $input = document.querySelector('#input');
+  const $ul = document.querySelector('#todos');
+  const saveBtn = document.querySelector('#saveBtn')
+  const deleteAllBtn = document.querySelector('#deleteAllBtn');
+
+  $form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const todo = $input.value;
+    $input.value = '';
+
+    printTodo(todo);
+  });
+
+  function printTodo(todo){
+    const li = document.createElement('li');
+    const todoTxt = document.createTextNode(todo);
+    const deleteBtn = document.createElement('button');
+    const deleteTxt = document.createTextNode('x');
+    deleteBtn.appendChild(deleteTxt);x
+    deleteBtn.addEventListener('click', (event) => $ul.removeChild(event.currentTarget.parentNode));
+    li.appendChild(todoTxt);
+    li.appendChild(deleteBtn);
+    $ul.appendChild(li);
+  }
+
+  deleteAllBtn.addEventListener('click', () => {
+    while($ul.firstChild) { $ul.removeChild($ul.firstChild); }
+  })
+
+</script>
+</body>
+</html>
