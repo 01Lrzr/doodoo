@@ -1,52 +1,41 @@
 <template>
   <div>
-    <base-header />
-    <todo-input @addTodo="addTodo"/>
-    <todo-list v-bind:propsdata="todoItems" @removeTodo="removeTodo"/>
-    <todo-footer @clearAll="clearAll"/>
+    <BaseHeader />
+    <TodoInput @addTodo="addTodo"/>
+    <TodoList v-bind:todoItems="todoItems" @removeTodo="removeTodo"/>
+    <TodoFooter @clearAll="clearAll"/>
   </div>
 </template>
-<script>
+<script setup>
 import BaseHeader from "./components/BaseHeader.vue"
 import TodoInput from "./components/TodoInput.vue"
 import TodoList from "./components/TodoList.vue"
 import TodoFooter from "./components/TodoFooter.vue"
+import { ref } from "vue"
 
-export default {
-  data() {
-    return {
-      todoItems: [],
-    }
-  },
-  methods: {
-    addTodo(todoItem) {
-      localStorage.setItem(todoItem, todoItem)
-      this.todoItems.push(todoItem)
-    },
-    removeTodo(todoItem, index){
-      localStorage.removeItem(localStorage.key(index));
-      this.todoItems.splice(index, 1)
-    },
-    clearAll() {
-      localStorage.clear()
-      this.todoItems = []
-    }
-  },
+const todoItems = ref([]);
 
-  created() {
-    if (localStorage.length > 0) {
-      for(let i = 0 ; i < localStorage.length ; i++) {
-        this.todoItems.push(localStorage.key(i));
-      }
-    }
-  },
-  components: {
-    "base-header": BaseHeader,
-    "TodoInput" : TodoInput,
-    "TodoList" : TodoList,
-    "TodoFooter" : TodoFooter
+if (localStorage.length > 0) {
+  for(let i = 0 ; i < localStorage.length ; i++) {
+    todoItems.value.push(localStorage.key(i));
   }
 }
+
+function addTodo(todoItem) {
+  localStorage.setItem(todoItem, todoItem)
+  todoItems.value.push(todoItem)
+}
+
+function removeTodo(index){
+  localStorage.removeItem(localStorage.key(index));
+  todoItems.value.splice(index, 1)
+}
+
+function clearAll() {
+  localStorage.clear()
+  todoItems.value = []
+}
+
 </script>
 
 <style lang="scss">

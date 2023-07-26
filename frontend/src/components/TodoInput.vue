@@ -4,22 +4,17 @@
    <button @click="addTodo">+</button>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      newTodo: '',
-    }
-  },
-  methods: {
-    addTodo(){
-      if (this.newTodo !== "") {
-        const value = this.newTodo && this.newTodo.trim();
-        this.$emit('addTodo', value)
-        this.newTodo = "";
-      }
+<script setup>
+  import { ref, defineEmits } from "vue"
+
+  const newTodo = ref('')
+  const emit = defineEmits(['addTodo'])
+
+  function addTodo() {
+    if (newTodo.value !== "") {
+      emit('addTodo', newTodo.value)
+      newTodo.value = ''
     }
   }
-}
 
 </script>

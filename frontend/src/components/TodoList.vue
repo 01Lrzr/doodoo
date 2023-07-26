@@ -1,21 +1,21 @@
 <template>
   <ul>
-    <li :key="index" v-for="(todo, index) in propsdata">
+    <li :key="index" v-for="(todo, index) in todoItems">
     {{todo}}
     <button @click="removeTodo" :index="index">x</button>
     </li>
   </ul>
 </template>
 
-<script >
-export default{
-  props: ['propsdata'],
+<script setup>
+  import { defineProps, defineEmits } from 'vue'
 
-  methods : {
-    removeTodo(todoItem, index) {
-      this.$emit('removeTodo', todoItem, index)
-    }
+  const props = defineProps(['todoItems'])
+  const emit = defineEmits(['removeTodo'])
+
+  function removeTodo(e) {
+    const index = e.target.getAttribute('index')
+    emit('removeTodo', index)
   }
-};
 </script>
 
