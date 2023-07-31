@@ -1,7 +1,10 @@
 <template>
-  <div>
-   <input type="text" v-model="newTodo" @keyup.enter="addTodo">
-   <button @click="addTodo">+</button>
+  <div class="column items-center q-mt-md">
+  <q-input rounded standout v-model="newTodo" @keyup.enter="addTodo" style= "width: 800px; ">
+    <template v-slot:append>
+      <q-btn round dense flat icon="add" @click="addTodo"/>
+    </template>
+  </q-input>
   </div>
 </template>
 <script setup>

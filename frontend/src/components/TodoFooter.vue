@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="clearAll">clear</button>
+    <q-btn :ripple="{ center: true }" no-caps outline color="primary" label="clear" @click="clearAll" />
   </div>
 </template>
 <script setup>
