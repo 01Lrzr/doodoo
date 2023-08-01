@@ -2,19 +2,7 @@
   <div>
     <BaseHeader />
     <TodoInput @addTodo="addTodo"/>
-    <div class="wrap">
-     <div class="container">
-       <q-card flat bordered class="my-card" :key="day" v-for="(day, index) in week" :index="index">
-          <!-- <q-card-section> -->
-            <div :index="index"  @click="selectDay" class="text-h6 day" >{{day}}</div>
-          <!-- </q-card-section> -->
-          <q-separator inset />
-          <q-card-section class="q-pt-none">
-          <TodoList :index="index" v-bind:todoItems="todoItems[index]" @removeTodo="removeTodo"/>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+    <TodoList  v-bind:todoItems="todoItems" @removeTodo="removeTodo" @selectDay="selectDay"/>
     <TodoFooter @clearAll="clearAll"/>
   </div>
 </template>
@@ -23,16 +11,10 @@ import BaseHeader from "./components/BaseHeader.vue"
 import TodoInput from "./components/TodoInput.vue"
 import TodoList from "./components/TodoList.vue"
 import TodoFooter from "./components/TodoFooter.vue"
-import { ref, onMounted } from "vue"
+import { ref } from "vue"
 
-// eslint-disable-next-line
-const todoItems = ref(Array.from(Array(7), () => new Array()));
-const week= [ "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
+const todoItems = ref([[], [], [], [], [], [], []]);
 let day = 0;
-
-onMounted(() => {
-  document.querySelector('.day').classList.add('selected');
-})
 
 function addTodo(todoItem) {
   todoItems.value[day].push(todoItem)
@@ -43,16 +25,11 @@ function removeTodo(index){
 }
 
 function clearAll() {
-  // eslint-disable-next-line
-  todoItems.value = Array.from(Array(7), () => new Array());
+  todoItems.value = [[], [], [], [], [], [], []];
 }
 
-function selectDay(e) {
-  day = e.target.getAttribute('index');
-  if ( document.querySelector('.selected') ) {
-    document.querySelector('.selected').classList.remove('selected');
-  }
-  e.target.classList.add('selected')
+function selectDay(i) {
+  day = i;
 }
 </script>
 
@@ -78,25 +55,4 @@ nav {
   }
 }
 
-.container {
-  display: flex;
-  flex-wrap: wrap; 
-  gap: 5px 5px;
-  margin:0 auto; 
-
-    .my-card {
-      width: 20%;
-      height : 300px;
-      
-      .selected {
-        background-color: $primary;
-        color : white;
-      }
-    }
-}
-
-
-.wrap {
-  margin: 0 auto;
-}
 </style>
