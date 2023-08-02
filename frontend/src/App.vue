@@ -20,7 +20,7 @@ function addTodo(todoItem) {
   todoItems.value[day].push(todoItem)
 }
 
-function removeTodo(index){
+function removeTodo(day,index){
   todoItems.value[day].splice(index, 1)
 }
 
